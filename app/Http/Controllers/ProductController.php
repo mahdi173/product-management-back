@@ -22,10 +22,16 @@ class ProductController extends Controller
     public function __construct(private ProductService  $productService, private ImageService $imageService)
     {
     }
-
-    public function index()
+    
+    /**
+     * index
+     *
+     * @param  Request $request
+     * @return mixed
+     */
+    public function index(Request $request): mixed
     {
-        //
+        return $this->productService->filter($request);
     }
 
     public function store(StoreProductRequest $request)
