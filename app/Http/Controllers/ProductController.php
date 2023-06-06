@@ -49,6 +49,8 @@ class ProductController extends Controller
 
     public function update(UpdateProductRequest $request, Product $product)
     {
+        $this->authorize('update', $product);
+
         $data= $request->validated();
         $data["type_id"]= $request->type_id;
 
@@ -63,6 +65,8 @@ class ProductController extends Controller
 
     public function destroy(Product $product): JsonResponse
     {
+        $this->authorize('delete', $product);
+
         return $this->productService->deleteProduct($product);
     }
 }

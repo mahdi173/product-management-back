@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -33,6 +34,18 @@ class Handler extends ExceptionHandler
                 return response()->json([
                     'message' => 'Record not found.'
                 ], 404);
+            }
+        });
+
+        $this->renderable(function (HttpException $e, $request) {
+            $statusCode = $e->getStatusCode();
+
+            if ($request->is('api/*')) {
+                if ($statusCode == 403) {
+                    return response()->json([
+                        'message' => 'Forbidden action.'
+                    ], 403);               
+                 }
             }
         });
     }
