@@ -22,6 +22,18 @@ class Product extends Model
         'type_id',
         'user_id',
         'photo_id'
+    ];  
+    
+    /**
+     * hidden
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'type_id',
+        'user_id',
+        'photo_id',
+        'deleted_at'
     ];
     
     /**
