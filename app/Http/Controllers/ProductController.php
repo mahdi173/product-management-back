@@ -33,8 +33,14 @@ class ProductController extends Controller
     {
         return $this->productService->filter($request);
     }
-
-    public function store(StoreProductRequest $request)
+    
+    /**
+     * store
+     *
+     * @param  StoreProductRequest $request
+     * @return JsonResponse
+     */
+    public function store(StoreProductRequest $request): JsonResponse
     {
         $data= $request->validated();
         $data["user_id"]= auth()->user()->id;
@@ -42,18 +48,33 @@ class ProductController extends Controller
 
         if($request->file('image')){
             $data["photo_id"]= $this->imageService->storeImage($request->file('image'));
+        }else{
+            $data["photo_id"]=1;
         }
 
         $response= $this->productService->storeProduct($data, $request->sizes);
         return response()->json($response);
     }
-
+    
+    /**
+     * show
+     *
+     * @param  Product $product
+     * @return JsonResponse
+     */
     public function show(Product $product): JsonResponse
     {
         return $this->productService->showProduct($product);
     }
-
-    public function update(UpdateProductRequest $request, Product $product)
+    
+    /**
+     * update
+     *
+     * @param  UpdateProductRequest $request
+     * @param  Product $product
+     * @return JsonResponse
+     */
+    public function update(UpdateProductRequest $request, Product $product): JsonResponse
     {
         $this->authorize('update', $product);
 
@@ -68,7 +89,13 @@ class ProductController extends Controller
 
         return response()->json($response);
     }
-
+    
+    /**
+     * destroy
+     *
+     * @param  Product $product
+     * @return JsonResponse
+     */
     public function destroy(Product $product): JsonResponse
     {
         $this->authorize('delete', $product);
