@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     require __DIR__.'/products.php';
     require __DIR__.'/types.php';
+    require __DIR__.'/sizes.php';
 });
 
 Route::post('/login', [AuthController::class, 'login']);
