@@ -15,11 +15,16 @@ class ImageService
     public function __construct( private ImageRepository $imageRepository)
     {
     }
-
+    
+    /**
+     * storeImage
+     *
+     * @param  mixed $file
+     * @return int
+     */
     public function storeImage($file): int
     {
         $fileName= date('YmdHi').$file->getClientOriginalName();
-        $file-> move(public_path('public/Images'), $fileName);
         $image= $this->imageRepository->create(["src"=>$fileName]);
         return $image->id;
     }
